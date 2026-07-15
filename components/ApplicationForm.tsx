@@ -35,7 +35,14 @@ export function ApplicationForm() {
   async function onSubmit(values: ApplicationFormValues) {
     setServerState("idle");
 
-    const response = await fetch("/api/telegram", {
+    const formEndpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT;
+
+    if (!formEndpoint) {
+      setServerState("error");
+      return;
+    }
+
+    const response = await fetch(formEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values)

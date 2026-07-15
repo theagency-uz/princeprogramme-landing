@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import { applicationSchema } from "@/lib/application-schema";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": process.env.ALLOWED_ORIGIN ?? "https://theagency-uz.github.io",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type"
+};
+
 function escapeHtml(value: string) {
   return value
     .replaceAll("&", "&amp;")
@@ -9,19 +15,26 @@ function escapeHtml(value: string) {
     .replaceAll('"', "&quot;");
 }
 
+export function OPTIONS() {
+  return new NextResponse(null, { status: 204, headers: corsHeaders });
+}
+
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = applicationSchema.safeParse(body);
 
   if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid form data" }, { status: 400, headers: corsHeaders });
   }
 
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
   if (!token || !chatId) {
-    return NextResponse.json({ error: "Telegram is not configured" }, { status: 503 });
+    return NextResponse.json(
+      { error: "Telegram is not configured" },
+      { status: 503, headers: corsHeaders }
+    );
   }
 
   const values = parsed.data;
@@ -46,8 +59,11 @@ export async function POST(request: Request) {
   });
 
   if (!telegramResponse.ok) {
-    return NextResponse.json({ error: "Telegram request failed" }, { status: 502 });
+    return NextResponse.json(
+      { error: "Telegram request failed" },
+      { status: 502, headers: corsHeaders }
+    );
   }
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true }, { headers: corsHeaders });
 }
