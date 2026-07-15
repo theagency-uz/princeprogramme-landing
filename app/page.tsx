@@ -123,6 +123,7 @@ const whyItems = [
 ];
 
 const benefitGlyphVariants = ["gate", "branch", "mentor", "shield", "value"] as const;
+const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 
 export default function Home() {
   return (
@@ -152,7 +153,7 @@ function Header() {
             className="group relative flex h-[68px] w-[92px] shrink-0 items-center justify-center overflow-hidden rounded-[22px] border border-[color-mix(in_srgb,var(--brand-navy)_10%,transparent)] bg-[var(--brand-ivory)] p-1 shadow-[0_22px_70px_rgba(7,24,47,0.16)] transition hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--gold)_48%,transparent)] active:translate-y-0"
           >
             <Image
-              src="/images/prince-logo.webp"
+              src={assetPath("/images/prince-logo.webp")}
               alt=""
               width={554}
               height={450}
@@ -225,7 +226,7 @@ function Hero() {
       <ParallaxFrame className="relative" y={42} scale={0.045}>
         <HeroCinematicStage className="relative aspect-[1.03/1] overflow-hidden rounded-[30px] bg-[var(--paper)] shadow-[0_34px_110px_rgba(7,24,47,0.18)] lg:aspect-[1.05/1]">
           <Image
-            src="/images/hero-campus.png"
+            src={assetPath("/images/hero-campus.png")}
             alt="Студенты Prince Programme на территории британского кампуса"
             fill
             priority
@@ -312,7 +313,7 @@ function ProgramSection() {
 
           <ParallaxFrame className="relative min-h-[420px] overflow-hidden rounded-[32px] bg-[var(--paper)] shadow-[0_28px_90px_rgba(7,24,47,0.12)]" y={54} scale={0.035}>
             <Image
-              src="/images/advisory-session.png"
+              src={assetPath("/images/advisory-session.png")}
               alt="Ментор Prince Programme помогает студенту выбрать академический путь"
               fill
               sizes="(min-width: 1024px) 38vw, 92vw"
@@ -526,7 +527,7 @@ function ContactSection() {
         <Reveal className="relative overflow-hidden rounded-[36px] bg-[var(--paper)] shadow-[0_34px_110px_rgba(7,24,47,0.16)]">
           <div className="absolute inset-0 hidden lg:block">
             <Image
-              src="/images/cta-study-hall.png"
+              src={assetPath("/images/cta-study-hall.png")}
               alt="Студент Prince Programme готовится к обучению вечером в британском колледже"
               fill
               sizes="100vw"
