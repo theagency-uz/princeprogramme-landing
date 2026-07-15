@@ -148,7 +148,7 @@ function Header() {
         <nav aria-label="Основная навигация" className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
           <a
             href="#"
-            className="group relative flex h-14 min-w-0 items-center gap-3 overflow-hidden rounded-[22px] bg-[var(--ink)] px-3 pr-5 text-[var(--page)] shadow-[0_22px_70px_rgba(7,24,47,0.18)] transition hover:-translate-y-0.5 active:translate-y-0"
+            className="group relative flex h-14 min-w-0 items-center gap-3 overflow-hidden rounded-[22px] bg-[var(--brand-navy)] px-3 pr-5 text-[var(--brand-ivory)] shadow-[0_22px_70px_rgba(7,24,47,0.18)] transition hover:-translate-y-0.5 active:translate-y-0"
           >
             <span className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-[radial-gradient(circle_at_20%_50%,color-mix(in_srgb,var(--gold)_38%,transparent),transparent_66%)] opacity-80 transition group-hover:translate-x-4" />
             <span className="relative grid size-10 shrink-0 place-items-center rounded-[16px] bg-[var(--gold)] text-sm font-black text-[#07182f] shadow-[inset_0_1px_0_rgba(255,255,255,0.34)]">
@@ -156,7 +156,7 @@ function Header() {
             </span>
             <span className="relative hidden leading-tight sm:block">
               <span className="block text-sm font-black tracking-normal">Prince Programme</span>
-              <span className="block text-xs font-semibold text-[color-mix(in_srgb,var(--page)_66%,transparent)]">United Kingdom</span>
+              <span className="block text-xs font-semibold text-[color-mix(in_srgb,var(--brand-ivory)_72%,transparent)]">United Kingdom</span>
             </span>
           </a>
 
@@ -206,7 +206,7 @@ function Hero() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
               href="#contacts"
-              className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[var(--ink)] px-7 text-sm font-black text-[var(--page)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--ink)_88%,var(--gold)_12%)] active:translate-y-0"
+              className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[var(--brand-navy)] px-7 text-sm font-black text-[var(--brand-ivory)] shadow-[0_16px_42px_rgba(7,24,47,0.18)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--brand-navy)_88%,var(--gold)_12%)] active:translate-y-0"
             >
               Оставить заявку
               <ArrowRight className="size-4 transition group-hover:translate-x-1" weight="bold" />

@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 :root {
+  --brand-navy: #07182f;
+  --brand-ivory: #f7f3ea;
   --page: #f7f3ea;
   --paper: #fffaf0;
   --ink: #07182f;

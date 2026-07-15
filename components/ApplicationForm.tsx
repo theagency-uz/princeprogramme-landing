@@ -135,7 +135,7 @@ export function ApplicationForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="group mt-2 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[var(--ink)] px-7 text-sm font-bold text-[var(--page)] shadow-[0_18px_50px_rgba(7,24,47,0.18)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--ink)_88%,var(--gold)_12%)] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-70"
+        className="group mt-2 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[var(--brand-navy)] px-7 text-sm font-bold text-[var(--brand-ivory)] shadow-[0_18px_50px_rgba(7,24,47,0.18)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--brand-navy)_88%,var(--gold)_12%)] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isSubmitting ? "Отправляем" : "Оставить заявку"}
         <ArrowRight className="size-4 transition group-hover:translate-x-1" weight="bold" />
