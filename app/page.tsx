@@ -148,16 +148,17 @@ function Header() {
         <nav aria-label="Основная навигация" className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
           <a
             href="#"
-            className="group relative flex h-14 min-w-0 items-center gap-3 overflow-hidden rounded-[22px] bg-[var(--brand-navy)] px-3 pr-5 text-[var(--brand-ivory)] shadow-[0_22px_70px_rgba(7,24,47,0.18)] transition hover:-translate-y-0.5 active:translate-y-0"
+            aria-label="Prince Programme - на главную"
+            className="group relative flex h-[68px] w-[92px] shrink-0 items-center justify-center overflow-hidden rounded-[22px] border border-[color-mix(in_srgb,var(--brand-navy)_10%,transparent)] bg-[var(--brand-ivory)] p-1 shadow-[0_22px_70px_rgba(7,24,47,0.16)] transition hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--gold)_48%,transparent)] active:translate-y-0"
           >
-            <span className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-[radial-gradient(circle_at_20%_50%,color-mix(in_srgb,var(--gold)_38%,transparent),transparent_66%)] opacity-80 transition group-hover:translate-x-4" />
-            <span className="relative grid size-10 shrink-0 place-items-center rounded-[16px] bg-[var(--gold)] text-sm font-black text-[#07182f] shadow-[inset_0_1px_0_rgba(255,255,255,0.34)]">
-              PP
-            </span>
-            <span className="relative hidden leading-tight sm:block">
-              <span className="block text-sm font-black tracking-normal">Prince Programme</span>
-              <span className="block text-xs font-semibold text-[color-mix(in_srgb,var(--brand-ivory)_72%,transparent)]">United Kingdom</span>
-            </span>
+            <Image
+              src="/images/prince-logo.webp"
+              alt=""
+              width={554}
+              height={450}
+              sizes="84px"
+              className="h-[60px] w-auto object-contain"
+            />
           </a>
 
           <div className="hidden h-14 items-center justify-center rounded-[22px] bg-[color-mix(in_srgb,var(--glass)_82%,var(--paper)_18%)] px-2 shadow-[0_18px_56px_rgba(7,24,47,0.1)] backdrop-blur-2xl lg:flex">
