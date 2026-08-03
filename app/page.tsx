@@ -25,6 +25,7 @@ import {
 	HeroHeadlineWords,
 	LineDrawing,
 	NumberTicker,
+	OrbitCountries,
 	PageScrollProgress,
 	ParallaxFrame,
 	PathwayWeaveAnimation,
@@ -57,6 +58,31 @@ const heroStats = [
 	{ value: "100+", label: "направлений" },
 	{ value: "80+", label: "университетов" },
 	{ value: "18", label: "недель" },
+];
+
+const countries = ["Узбекистан", "Казахстан", "Кыргызстан", "Таджикистан", "Туркменистан"];
+
+type StudentTestimonial = {
+	name: string;
+	achievement: string;
+	quote: string;
+	video: string;
+};
+
+const studentTestimonials: StudentTestimonial[] = [
+	{
+		name: "Абдуллох",
+		achievement: "Диплом с отличием",
+		quote:
+			'"Hattoki maktabni bitirmasdan, Buyuk Britaniyaning oliy ta\'limiga birinchi qadam qo\'yishga yordam bergan Prince Programme\'ga rahmat!"',
+		video: "/videos/IMG_3685.mp4",
+	},
+	{
+		name: "Ясмина",
+		achievement: "£21'000 грант",
+		quote: '"Я живу с Host family, и у нас с ней очень дружные и крепкие отношения. По выходным мы ходим на шоппинг."',
+		video: "/videos/IMG_3686.mp4",
+	},
 ];
 
 const pathways = [
@@ -113,9 +139,11 @@ export default function Home() {
 			<Hero />
 			<HeroStatsSection />
 			<ProgramSection />
+			<CountriesSection />
 			<CollegesSection />
 			<PathwaysSection />
 			<WhySection />
+			<StudentTestimonialsSection />
 			<ContactSection />
 		</main>
 	);
@@ -258,10 +286,10 @@ function ProgramSection() {
 							Академический мост между Центральной Азией и Великобританией
 						</h2>
 					</div>
-					<p className="max-w-2xl text-lg leading-8 text-[var(--muted)]">
+					{/* <p className="max-w-2xl text-lg leading-8 text-[var(--muted)]">
 						PRINCE PROGRAMME разработана и проводится PDVL Global. Программа началась с City College Plymouth и расширяется по
 						Великобритании через Edinburgh College, City of Glasgow College и New College Durham.
-					</p>
+					</p> */}
 				</ClipReveal>
 
 				<div className="mt-8 grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
@@ -333,16 +361,28 @@ function ProgramSection() {
 	);
 }
 
+function CountriesSection() {
+	return (
+		<section id="countries" aria-label="Пять стран Центральной Азии" className="py-12 md:py-16">
+			<div className="page-shell">
+				<Reveal>
+					<OrbitCountries countries={countries} />
+				</Reveal>
+			</div>
+		</section>
+	);
+}
+
 function CollegesSection() {
 	return (
 		<section id="colleges" className="py-12 md:py-16">
 			<div className="page-shell">
 				<ClipReveal className="max-w-5xl">
-					<h2 className="font-display text-4xl font-semibold leading-tight tracking-normal text-[var(--ink)] md:text-6xl lg:text-7xl">
+					<h2 className="font-display max-w-5xl text-balance text-4xl font-semibold leading-tight tracking-normal text-[var(--ink)] md:text-6xl lg:text-7xl">
 						Представлены в Центральной Азии. Учим в колледжах Великобритании
 					</h2>
 					<p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">
-						Программа связывает семьи из пяти стран региона с государственными колледжами Великобритании, признанными на национальном
+						Программа связывает семьи из пяти стран региона с государственными колледжами Великобритании, признанными на международном
 						уровне.
 					</p>
 				</ClipReveal>
@@ -500,6 +540,60 @@ function WhySection() {
 	);
 }
 
+function StudentTestimonialsSection() {
+	const testimonialGridClass =
+		studentTestimonials.length >= 3 ? "lg:grid-cols-3 lg:max-w-5xl" : "md:grid-cols-2 md:max-w-3xl";
+
+	return (
+		<section id="testimonials" className="py-12 md:py-16">
+			<div className="page-shell">
+				<ClipReveal className="mx-auto max-w-4xl text-center">
+					<h2 className="font-display text-4xl font-semibold leading-tight tracking-normal text-[var(--ink)] md:text-6xl">
+						Что говорят наши студенты
+					</h2>
+					<p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-[var(--muted)]">
+						Реальные впечатления участников Prince Programme — об учёбе, жизни в Великобритании и поддержке на каждом этапе.
+					</p>
+				</ClipReveal>
+
+				<div className={["mx-auto mt-9 grid items-stretch gap-5", testimonialGridClass].join(" ")}>
+					{studentTestimonials.map((testimonial, index) => {
+						return (
+							<Reveal
+								key={testimonial.name}
+								delay={index * 0.06}
+								className="mx-auto h-full w-full max-w-[360px] overflow-hidden rounded-[32px] border border-[color-mix(in_srgb,var(--ink)_10%,transparent)] bg-[var(--paper)] shadow-[0_24px_76px_rgba(7,24,47,0.1)] md:max-w-none"
+							>
+								<article className="flex h-full flex-col">
+									<div className="overflow-hidden bg-[var(--ink)]">
+										<video
+											controls
+											playsInline
+											preload="metadata"
+											aria-label={`Видеоотзыв студента ${testimonial.name}`}
+											className="aspect-[9/16] w-full object-cover"
+										>
+											<source src={assetPath(testimonial.video)} type="video/mp4" />
+										</video>
+									</div>
+
+									<div className="flex flex-1 flex-col p-6 md:p-7">
+										<h3 className="font-display text-3xl font-semibold leading-tight text-[var(--ink)]">{testimonial.name}</h3>
+										<p className="mt-2 text-sm font-bold italic leading-6 text-[var(--gold-deep)]">{testimonial.achievement}</p>
+										<blockquote className="mt-5 text-base font-semibold leading-7 text-[var(--muted)]">
+											{testimonial.quote}
+										</blockquote>
+									</div>
+								</article>
+							</Reveal>
+						);
+					})}
+				</div>
+			</div>
+		</section>
+	);
+}
+
 function ContactSection() {
 	return (
 		<section id="contacts" className="pt-12 md:pt-16">
@@ -568,7 +662,10 @@ function ContactSection() {
 
 					<div className="text-sm font-semibold text-[#6f776f] md:text-right">
 						<p>© 2025 Prince Programme. Все права защищены.</p>
-						<a href="mailto:info@princeconsult.com" className="mt-2 inline-block font-black text-[#07182f] transition hover:text-[var(--gold-deep)]">
+						<a
+							href="mailto:info@princeconsult.com"
+							className="mt-2 inline-block font-black text-[#07182f] transition hover:text-[var(--gold-deep)]"
+						>
 							info@princeconsult.com
 						</a>
 					</div>
@@ -578,17 +675,7 @@ function ContactSection() {
 	);
 }
 
-function ContactLine({
-	icon: Icon,
-	label,
-	value,
-	href,
-}: {
-	icon: typeof HouseLine;
-	label: string;
-	value: string;
-	href?: string;
-}) {
+function ContactLine({ icon: Icon, label, value, href }: { icon: typeof HouseLine; label: string; value: string; href?: string }) {
 	const content = (
 		<>
 			<Icon className="mt-1 size-5 shrink-0 text-[var(--gold-deep)]" weight="duotone" />

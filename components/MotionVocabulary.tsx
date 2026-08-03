@@ -890,71 +890,27 @@ export function OrbitCountries({ countries }: { countries: string[] }) {
   const reduce = useReducedMotion();
 
   return (
-    <div className="relative min-h-[420px] overflow-hidden rounded-[36px] bg-[linear-gradient(145deg,color-mix(in_srgb,var(--paper)_92%,var(--gold)_8%),color-mix(in_srgb,var(--page)_80%,var(--paper)_20%))] p-7 shadow-[0_26px_80px_rgba(7,24,47,0.08)]">
-      <svg className="pointer-events-none absolute inset-0 size-full text-[var(--gold)]" viewBox="0 0 460 420" fill="none" aria-hidden="true" preserveAspectRatio="none">
-        {[42, 72, 104].map((radius, index) => (
-          <motion.circle
-            key={radius}
-            cx="230"
-            cy="228"
-            r={radius}
-            stroke="currentColor"
-            strokeWidth="1.4"
-            initial={reduce ? false : { scale: 0.62, opacity: 0 }}
-            animate={
-              reduce
-                ? { scale: 1, opacity: 0.12 }
-                : { scale: [0.62, 1.42, 1.78], opacity: [0, 0.18, 0] }
-            }
-            transition={
-              reduce
-                ? { duration: 0 }
-                : { delay: index * 0.52, duration: 3.2, repeat: Infinity, repeatDelay: 0.9, ease: "easeInOut" }
-            }
-            style={{ transformOrigin: "230px 228px" }}
-          />
-        ))}
-      </svg>
-      <motion.div
-        className="absolute left-1/2 top-1/2 hidden size-[330px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--gold)_22%,transparent),transparent_64%)] md:block"
-        animate={reduce ? undefined : { rotate: 360 }}
-        transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
+    <div className="relative overflow-hidden rounded-[36px] border border-[color-mix(in_srgb,var(--ink)_8%,transparent)] bg-[linear-gradient(145deg,color-mix(in_srgb,var(--paper)_94%,var(--gold)_6%),color-mix(in_srgb,var(--page)_86%,var(--paper)_14%))] shadow-[0_28px_84px_rgba(7,24,47,0.1)]">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_52%,color-mix(in_srgb,var(--gold)_10%,transparent),transparent_42%)]"
+        aria-hidden="true"
       />
-      <div className="relative z-10 flex h-full min-h-[360px] flex-col justify-between">
-        <div className="max-w-sm">
-          <p className="text-sm font-black text-[var(--gold-deep)]">Central Asia</p>
-          <h3 className="font-display mt-3 text-4xl font-semibold leading-tight">Пять стран региона</h3>
-        </div>
-        <div className="relative mx-auto hidden size-[310px] md:block">
-          <div className="absolute inset-14 grid place-items-center rounded-full bg-[var(--ink)] text-center text-sm font-black text-[var(--page)] shadow-[0_24px_70px_rgba(7,24,47,0.22)]">
-            Prince<br />Programme
-          </div>
-          {countries.map((country, index) => {
-            const angle = (index / countries.length) * Math.PI * 2 - Math.PI / 2;
-            const x = Math.cos(angle) * 132 + 155;
-            const y = Math.sin(angle) * 132 + 155;
-            return (
-              <motion.div
-                key={country}
-                className="absolute rounded-full bg-[var(--paper)] px-4 py-2 text-sm font-black text-[var(--ink)] shadow-[0_16px_40px_rgba(7,24,47,0.1)]"
-                style={{ left: x, top: y, translateX: "-50%", translateY: "-50%" }}
-                initial={reduce ? false : { opacity: 0, scale: 0.7 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08, type: "spring", stiffness: 220, damping: 18 }}
-              >
-                {country}
-              </motion.div>
-            );
-          })}
-        </div>
-        <div className="grid gap-3 md:hidden">
+
+      <div className="relative px-6 py-8 sm:px-8 md:hidden">
+        <p className="text-[11px] font-extrabold tracking-[0.08em] text-[var(--gold-deep)]">Central Asia</p>
+        <h3 className="font-display mt-2 max-w-[230px] text-[1.75rem] font-semibold leading-[1.08] text-[var(--ink)]">
+          Пять стран региона
+        </h3>
+
+        <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[22px] border border-[color-mix(in_srgb,var(--ink)_10%,transparent)] bg-[color-mix(in_srgb,var(--ink)_10%,transparent)]">
           {countries.map((country, index) => (
             <motion.div
               key={country}
-              className="rounded-2xl bg-[var(--paper)] px-5 py-4 text-base font-black text-[var(--ink)] shadow-[0_12px_32px_rgba(7,24,47,0.08)]"
-              initial={reduce ? false : { opacity: 0, x: -18 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className={`bg-[var(--paper)] px-3 py-3.5 text-[11px] font-bold text-[var(--ink)] ${
+                index === countries.length - 1 ? "col-span-2 text-center" : ""
+              }`}
+              initial={reduce ? false : { opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
             >
@@ -962,6 +918,80 @@ export function OrbitCountries({ countries }: { countries: string[] }) {
             </motion.div>
           ))}
         </div>
+      </div>
+
+      <div className="relative hidden h-[520px] md:block lg:h-[560px]">
+        <div className="absolute left-9 top-9 z-10 lg:left-12 lg:top-12">
+          <p className="text-[11px] font-extrabold tracking-[0.08em] text-[var(--gold-deep)]">Central Asia</p>
+          <h3 className="font-display mt-2 max-w-[230px] text-[1.75rem] font-semibold leading-[1.08] text-[var(--ink)] lg:text-3xl">
+            Пять стран региона
+          </h3>
+        </div>
+
+        <motion.div
+          className="absolute left-[6%] right-[6%] top-1/2 h-[330px] -translate-y-1/2 rounded-[50%] border border-[color-mix(in_srgb,var(--ink)_18%,transparent)] lg:h-[370px]"
+          initial={reduce ? false : { opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        />
+        <motion.div
+          className="absolute left-[16%] right-[16%] top-1/2 h-[245px] -translate-y-1/2 rounded-[50%] border border-[color-mix(in_srgb,var(--gold)_36%,transparent)] lg:h-[280px]"
+          initial={reduce ? false : { opacity: 0, scale: 0.84 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ delay: 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        />
+
+        <div className="pointer-events-none absolute inset-0 grid place-items-center" aria-hidden="true">
+          {[0, 1, 2].map((index) => (
+            <motion.div
+              key={index}
+              className="absolute h-[150px] w-[30%] rounded-[50%] border border-[color-mix(in_srgb,var(--ink)_16%,transparent)]"
+              initial={reduce ? false : { opacity: 0, scale: 0.72 }}
+              animate={reduce ? undefined : { opacity: [0, 0.18, 0], scale: [0.72, 2.15] }}
+              transition={{
+                delay: index * 0.72,
+                duration: 3.2,
+                repeat: Infinity,
+                repeatDelay: 0.35,
+                ease: "easeOut"
+              }}
+            />
+          ))}
+        </div>
+
+        <motion.div
+          className="absolute left-1/2 top-1/2 grid size-[116px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[color-mix(in_srgb,var(--gold)_46%,transparent)] bg-[var(--ink)] text-center text-[11px] font-black leading-[1.35] text-[var(--paper)] shadow-[0_20px_55px_rgba(7,24,47,0.2)]"
+          initial={reduce ? false : { opacity: 0, scale: 0.68 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ delay: 0.25, type: "spring", stiffness: 190, damping: 18 }}
+        >
+          Prince
+          <br />
+          Programme
+        </motion.div>
+
+        {countries.map((country, index) => {
+          const angle = (index / countries.length) * Math.PI * 2 - Math.PI / 2;
+          const x = Math.cos(angle) * 41 + 50;
+          const y = Math.sin(angle) * 36 + 50;
+
+          return (
+            <motion.div
+              key={country}
+              className="absolute whitespace-nowrap rounded-xl border border-[color-mix(in_srgb,var(--ink)_16%,transparent)] bg-[color-mix(in_srgb,var(--paper)_84%,var(--ink)_16%)] px-3.5 py-2 text-[11px] font-bold text-[var(--ink)] shadow-[0_14px_34px_rgba(7,24,47,0.12)] lg:text-xs"
+              style={{ left: `${x}%`, top: `${y}%`, translateX: "-50%", translateY: "-50%" }}
+              initial={reduce ? false : { opacity: 0, scale: 0.78 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ delay: 0.34 + index * 0.08, type: "spring", stiffness: 210, damping: 19 }}
+            >
+              {country}
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );

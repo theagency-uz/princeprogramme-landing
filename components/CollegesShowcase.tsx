@@ -33,13 +33,6 @@ const collegeMedia: CollegeMedia[] = [
 		type: "video",
 		videoId: "35aPmGb43GI",
 	},
-	{
-		id: "durham",
-		name: "New College Durham",
-		type: "image",
-		imageSrc: "/images/new-college-durham.jpg",
-		alt: "Кампус New College Durham",
-	},
 ];
 
 const transition = { duration: 0.56, ease: [0.16, 1, 0.3, 1] as const };
@@ -160,7 +153,9 @@ export function CollegesShowcase() {
 								/>
 								<span
 									className={`relative z-10 text-lg font-black leading-7 transition-colors duration-300 ${
-										isActive ? "text-[var(--gold)]" : "text-[var(--page)] group-hover:text-[color-mix(in_srgb,var(--page)_76%,var(--gold)_24%)]"
+										isActive
+											? "text-[var(--gold)]"
+											: "text-[var(--page)] group-hover:text-[color-mix(in_srgb,var(--page)_76%,var(--gold)_24%)]"
 									}`}
 								>
 									{college.name}
