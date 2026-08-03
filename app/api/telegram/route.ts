@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     "",
     `<b>Имя:</b> ${escapeHtml(values.name)}`,
     `<b>Телефон:</b> ${escapeHtml(values.phone)}`,
-    `<b>Email:</b> ${escapeHtml(values.email)}`,
+    `<b>Email:</b> ${escapeHtml(values.email || "Не указан")}`,
     `<b>Направление:</b> ${escapeHtml(values.interest)}`,
     `<b>Комментарий:</b> ${escapeHtml(values.comment || "Не указан")}`
   ].join("\n");

@@ -208,9 +208,13 @@ export function HeroCinematicStage({
           <motion.text
             x="74"
             y="528"
-            fill="rgba(247,243,234,0.86)"
-            fontSize="19"
-            fontWeight="800"
+            fill="rgba(255,250,240,0.98)"
+            stroke="rgba(7,24,47,0.82)"
+            strokeWidth="5"
+            strokeLinejoin="round"
+            paintOrder="stroke"
+            fontSize="22"
+            fontWeight="900"
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={reduce ? { duration: 0 } : { delay: 1.02, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
@@ -220,9 +224,13 @@ export function HeroCinematicStage({
           <motion.text
             x="658"
             y="48"
-            fill="rgba(247,243,234,0.9)"
-            fontSize="19"
-            fontWeight="800"
+            fill="rgba(255,250,240,0.98)"
+            stroke="rgba(7,24,47,0.82)"
+            strokeWidth="5"
+            strokeLinejoin="round"
+            paintOrder="stroke"
+            fontSize="22"
+            fontWeight="900"
             initial={reduce ? false : { opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={reduce ? { duration: 0 } : { delay: 1.2, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
@@ -827,7 +835,7 @@ export function NumberTicker({
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-12% 0px" });
   const motionValue = useMotionValue(0);
-  const rounded = useTransform(motionValue, (latest) => Math.round(latest).toLocaleString("ru-RU"));
+  const rounded = useTransform(motionValue, (latest) => String(Math.round(latest)));
 
   useEffect(() => {
     if (!inView) return;
