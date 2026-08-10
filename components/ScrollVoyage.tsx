@@ -32,7 +32,7 @@ export function ScrollVoyage() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-20 hidden overflow-hidden md:block"
+      className="pointer-events-none fixed inset-0 z-20 hidden overflow-hidden [contain:strict] md:block"
     >
       <motion.svg
         className="absolute inset-y-0 right-[-10vw] h-[100dvh] w-[62vw]"
@@ -55,18 +55,6 @@ export function ScrollVoyage() {
             <stop offset="58%" stopColor="rgba(255, 255, 255, 0.12)" />
             <stop offset="100%" stopColor="rgba(244, 224, 162, 0)" />
           </linearGradient>
-          <filter id="voyage-glow" x="-35%" y="-10%" width="170%" height="120%">
-            <feGaussianBlur stdDeviation="8" result="blur" />
-            <feColorMatrix
-              in="blur"
-              type="matrix"
-              values="1 0 0 0 0.78 0 1 0 0 0.58 0 0 1 0 0.18 0 0 0 0.58 0"
-            />
-            <feMerge>
-              <feMergeNode />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
         </defs>
 
         <path
@@ -87,7 +75,6 @@ export function ScrollVoyage() {
           stroke="url(#voyage-thread)"
           strokeWidth="3.2"
           strokeLinecap="round"
-          filter="url(#voyage-glow)"
           style={{ pathLength: smoothProgress }}
         />
         <motion.path
@@ -116,14 +103,11 @@ export function ScrollVoyage() {
 
       <motion.div
         className="absolute right-[5.7vw] top-0 h-16 w-16"
-        style={{ y: navigatorY, x: navigatorX, rotate: navigatorRotate, scale: navigatorScale }}
+        style={{ y: navigatorY, x: navigatorX, rotate: navigatorRotate, scale: navigatorScale, willChange: "transform" }}
       >
         <motion.svg
           viewBox="0 0 72 72"
           className="h-full w-full overflow-visible"
-          style={{
-            filter: "drop-shadow(0 18px 30px rgba(27, 49, 86, 0.2)) drop-shadow(0 0 18px rgba(210, 171, 76, 0.3))"
-          }}
         >
           <motion.g style={{ rotate: compassSpin, transformOrigin: "36px 36px" }}>
             <path

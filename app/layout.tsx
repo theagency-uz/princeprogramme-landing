@@ -1,7 +1,7 @@
 import "@fontsource-variable/manrope";
 import "@fontsource-variable/newsreader";
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.princeprogramme.com"),
@@ -14,6 +14,11 @@ export const metadata: Metadata = {
       "Academic Foundation pathway connecting Central Asian students with UK colleges and universities.",
     images: ["/images/hero-campus.png"]
   }
+};
+
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#07182f"
 };
 
 export default function RootLayout({

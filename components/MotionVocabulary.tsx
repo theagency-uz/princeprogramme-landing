@@ -119,7 +119,9 @@ export function HeroCinematicStage({
   children: ReactNode;
   className?: string;
 }) {
+  const stageRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const stageInView = useInView(stageRef, { margin: "120px 0px" });
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
   const smoothX = useSpring(pointerX, { stiffness: 150, damping: 22, mass: 0.45 });
@@ -144,6 +146,7 @@ export function HeroCinematicStage({
 
   return (
     <motion.div
+      ref={stageRef}
       className={className}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetPointer}
@@ -197,10 +200,12 @@ export function HeroCinematicStage({
             animate={
               reduce
                 ? { pathLength: 1, opacity: 0.55 }
-                : { pathLength: [0, 0.23, 0.23], pathOffset: [0, 0.42, 0.86], opacity: [0, 1, 0] }
+                : stageInView
+                  ? { pathLength: [0, 0.23, 0.23], pathOffset: [0, 0.42, 0.86], opacity: [0, 1, 0] }
+                  : { pathLength: 0, pathOffset: 0, opacity: 0 }
             }
             transition={
-              reduce
+              reduce || !stageInView
                 ? { duration: 0 }
                 : { delay: 1.45, duration: 3.05, repeat: Infinity, repeatDelay: 1.05, ease: "easeInOut" }
             }
@@ -259,10 +264,12 @@ export function HeroCinematicStage({
             animate={
               reduce
                 ? { opacity: 0.7, scale: 1 }
-                : { opacity: [0, 0.9, 0.38, 0.85], scale: [0.35, 1, 0.72, 1] }
+                : stageInView
+                  ? { opacity: [0, 0.9, 0.38, 0.85], scale: [0.35, 1, 0.72, 1] }
+                  : { opacity: 0, scale: 0.35 }
             }
             transition={
-              reduce
+              reduce || !stageInView
                 ? { duration: 0 }
                 : { delay: mark.delay, duration: 3.4, repeat: Infinity, repeatDelay: 0.4, ease: "easeInOut" }
             }
@@ -555,14 +562,16 @@ export function WhyCompassAnimation({ className }: { className?: string }) {
 }
 
 export function AcademicPulseAnimation({ className }: { className?: string }) {
+  const ref = useRef<SVGSVGElement>(null);
   const reduce = useReducedMotion();
+  const inView = useInView(ref, { margin: "120px 0px" });
   const ticks = Array.from({ length: 16 }, (_, index) => index);
 
   return (
-    <svg className={className} viewBox="0 0 260 260" fill="none" aria-hidden="true">
+    <svg ref={ref} className={className} viewBox="0 0 260 260" fill="none" aria-hidden="true">
       <motion.g
-        animate={reduce ? undefined : { rotate: 360 }}
-        transition={reduce ? { duration: 0 } : { duration: 28, repeat: Infinity, ease: "linear" }}
+        animate={reduce || !inView ? { rotate: 0 } : { rotate: 360 }}
+        transition={reduce || !inView ? { duration: 0 } : { duration: 28, repeat: Infinity, ease: "linear" }}
         style={{ transformOrigin: "130px 130px" }}
       >
         {ticks.map((tick) => {
@@ -811,15 +820,17 @@ export function ClipReveal({
   const reduce = useReducedMotion();
 
   return (
-    <motion.div
-      className={className}
-      initial={reduce ? false : { clipPath: "inset(0 0 100% 0)", opacity: 0.72 }}
-      whileInView={{ clipPath: "inset(0 0 0% 0)", opacity: 1 }}
-      viewport={{ once: true, amount: 0.32 }}
-      transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {children}
-    </motion.div>
+    <div className="overflow-hidden">
+      <motion.div
+        className={className}
+        initial={reduce ? false : { y: 32, opacity: 0.72 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, amount: 0.32 }}
+        transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 }
 

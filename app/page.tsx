@@ -1,6 +1,7 @@
 import Image from "next/image";
 import {
 	ArrowRight,
+	Bank,
 	BookOpen,
 	ChartLineUp,
 	CheckCircle,
@@ -25,7 +26,6 @@ import {
 	HeroHeadlineWords,
 	LineDrawing,
 	NumberTicker,
-	OrbitCountries,
 	PageScrollProgress,
 	ParallaxFrame,
 	PathwayWeaveAnimation,
@@ -37,6 +37,7 @@ import {
 import { FloatIn, Reveal } from "@/components/Reveal";
 import { ScrollVoyage } from "@/components/ScrollVoyage";
 import { CollegesShowcase } from "@/components/CollegesShowcase";
+import { MobileMenu } from "@/components/MobileMenu";
 import Link from "next/link";
 
 const navItems = [
@@ -165,7 +166,7 @@ function Header() {
 						/>
 					</Link>
 
-					<div className="hidden h-14 items-center justify-center rounded-[22px] bg-[color-mix(in_srgb,var(--glass)_82%,var(--paper)_18%)] px-2 shadow-[0_18px_56px_rgba(7,24,47,0.1)] backdrop-blur-2xl lg:flex">
+					<div className="hidden h-14 items-center justify-center rounded-[22px] bg-[color-mix(in_srgb,var(--paper)_86%,var(--page)_14%)] px-2 shadow-[0_18px_56px_rgba(7,24,47,0.1)] lg:flex">
 						{navItems.map((item) => (
 							<a
 								key={item.href}
@@ -178,14 +179,17 @@ function Header() {
 						))}
 					</div>
 
-					<a
-						href="#contacts"
-						className="group relative inline-flex h-14 items-center justify-center gap-2 overflow-hidden rounded-[22px] bg-[var(--gold)] px-5 text-sm font-black text-[#07182f] shadow-[0_22px_70px_rgba(147,117,29,0.2)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--gold)_86%,white_14%)] active:translate-y-0"
-					>
-						<span className="pointer-events-none absolute inset-y-[-30%] -left-12 w-8 -rotate-12 bg-white/42 blur-sm transition duration-500 group-hover:translate-x-48" />
-						<span className="relative whitespace-nowrap">Оставить заявку</span>
-						<ArrowRight className="relative size-4 transition group-hover:translate-x-1" weight="bold" />
-					</a>
+					<div className="flex items-center justify-end">
+						<MobileMenu items={navItems} />
+						<a
+							href="#contacts"
+							className="group relative hidden h-14 items-center justify-center gap-2 overflow-hidden rounded-[22px] bg-[var(--gold)] px-5 text-sm font-black text-[#07182f] shadow-[0_22px_70px_rgba(147,117,29,0.2)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--gold)_86%,white_14%)] active:translate-y-0 lg:inline-flex"
+						>
+							<span className="pointer-events-none absolute inset-y-[-30%] -left-12 w-8 -rotate-12 bg-white/42 blur-sm transition duration-500 group-hover:translate-x-48" />
+							<span className="relative whitespace-nowrap">Оставить заявку</span>
+							<ArrowRight className="relative size-4 transition group-hover:translate-x-1" weight="bold" />
+						</a>
+					</div>
 				</nav>
 			</div>
 		</header>
@@ -363,10 +367,63 @@ function ProgramSection() {
 
 function CountriesSection() {
 	return (
-		<section id="countries" aria-label="Пять стран Центральной Азии" className="py-12 md:py-16">
+		<section id="countries" aria-label="Пять стран Центральной Азии" className="relative z-30 py-12 md:py-16">
 			<div className="page-shell">
-				<Reveal>
-					<OrbitCountries countries={countries} />
+				<Reveal className="overflow-hidden rounded-[36px] bg-[var(--brand-navy)] text-[var(--brand-ivory)] shadow-[0_30px_90px_rgba(7,24,47,0.2)]">
+					<div className="grid lg:min-h-[620px] lg:grid-cols-[0.94fr_1.06fr]">
+						<div className="relative flex flex-col justify-center px-6 py-10 sm:px-10 sm:py-12 lg:px-12 xl:px-14">
+							<div
+								className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(201,166,70,0.1),transparent_34%)]"
+								aria-hidden="true"
+							/>
+
+							<div className="relative">
+								<h2 className="font-display max-w-[620px] text-[2.35rem] font-semibold leading-[1.04] tracking-normal sm:text-5xl lg:text-[3.4rem] xl:text-[3.75rem]">
+									Prince Programme в Центральной Азии
+								</h2>
+
+								<div className="mt-7 h-px w-12 bg-[var(--gold)] sm:mt-8" aria-hidden="true" />
+
+								<p className="mt-7 max-w-lg text-lg leading-8 text-[color-mix(in_srgb,var(--brand-ivory)_82%,transparent)] sm:text-xl">
+									Открываем студентам путь к образованию в Великобритании.
+								</p>
+
+								<ul className="mt-8 flex max-w-xl flex-wrap items-center gap-x-3 gap-y-3 text-sm font-bold text-[color-mix(in_srgb,var(--brand-ivory)_88%,transparent)] sm:text-base">
+									{countries.map((country, index) => (
+										<li key={country} className="flex items-center gap-3">
+											{index > 0 ? <span className="size-1 rounded-full bg-[var(--gold)]" aria-hidden="true" /> : null}
+											{country}
+										</li>
+									))}
+								</ul>
+
+								<div className="mt-9 flex max-w-xl items-center gap-4 border-t border-[color-mix(in_srgb,var(--gold)_34%,transparent)] pt-6 sm:mt-10">
+									<div className="grid size-11 shrink-0 place-items-center rounded-full border border-[var(--gold)] text-[var(--gold)]">
+										<Bank className="size-6" weight="duotone" />
+									</div>
+									<p className="text-xs font-semibold leading-5 text-[color-mix(in_srgb,var(--brand-ivory)_76%,transparent)] sm:text-sm sm:leading-6">
+										Официальный представитель Prince Foundation Programme в Центральной Азии
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div className="relative min-h-[410px] overflow-hidden sm:min-h-[500px] lg:min-h-0">
+							<div className="absolute inset-y-0 right-0 w-[200%]">
+								<Image
+									src={assetPath("/images/central-asia-map-reference.jpg")}
+									alt="Карта Центральной Азии с представительствами Prince Programme в пяти странах"
+									fill
+									sizes="(min-width: 1024px) 52vw, 100vw"
+									className="object-cover object-right"
+								/>
+							</div>
+							<div
+								className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,var(--brand-navy)_0%,rgba(7,24,47,0.48)_6%,transparent_16%)]"
+								aria-hidden="true"
+							/>
+						</div>
+					</div>
 				</Reveal>
 			</div>
 		</section>
