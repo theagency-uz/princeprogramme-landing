@@ -1,5 +1,6 @@
 import "@fontsource-variable/manrope";
 import "@fontsource-variable/newsreader";
+import "react-phone-input-2/lib/style.css";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 

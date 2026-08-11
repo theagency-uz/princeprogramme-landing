@@ -1,0 +1,186 @@
+name: Deploy production with PM2
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: prince-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck -- --incremental false
+
+      - name: Build standalone application
+        run: npm run build
+
+      - name: Prepare lightweight release
+        run: |
+          set -euo pipefail
+
+          release_dir="$RUNNER_TEMP/prince-release"
+          mkdir -p "$release_dir/.next"
+
+          cp -R .next/standalone/. "$release_dir/"
+          cp -R .next/static "$release_dir/.next/static"
+          cp -R public "$release_dir/public"
+          cp ecosystem.config.cjs "$release_dir/ecosystem.config.cjs"
+
+          test -f "$release_dir/server.js"
+          tar -C "$release_dir" -czf "$RUNNER_TEMP/prince-release.tar.gz" .
+
+      - name: Configure SSH
+        env:
+          HOST: ${{ secrets.HOST }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          set -euo pipefail
+
+          test -n "$HOST"
+          test -n "$SSH_KEY"
+
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$SSH_KEY" > "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/deploy_key"
+          ssh-keyscan -p 22 -H "$HOST" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+      - name: Upload release
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+        run: |
+          set -euo pipefail
+
+          test -n "$HOST"
+          test -n "$USERNAME"
+
+          scp \
+            -i "$HOME/.ssh/deploy_key" \
+            -P 22 \
+            -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=yes \
+            "$RUNNER_TEMP/prince-release.tar.gz" \
+            "$USERNAME@$HOST:/tmp/prince-$GITHUB_SHA.tar.gz"
+
+      - name: Activate release with PM2
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          TARGET_DIRECTORY: ${{ secrets.TARGET_DIRECTORY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          set -euo pipefail
+
+          test -n "$HOST"
+          test -n "$USERNAME"
+          test -n "$TARGET_DIRECTORY"
+          test -n "$TELEGRAM_BOT_TOKEN"
+          test -n "$TELEGRAM_CHAT_ID"
+
+          printf -v remote_env \
+            'TARGET_DIRECTORY=%q RELEASE_SHA=%q TELEGRAM_BOT_TOKEN=%q TELEGRAM_CHAT_ID=%q' \
+            "$TARGET_DIRECTORY" "$GITHUB_SHA" "$TELEGRAM_BOT_TOKEN" "$TELEGRAM_CHAT_ID"
+
+          ssh \
+            -i "$HOME/.ssh/deploy_key" \
+            -p 22 \
+            -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=yes \
+            "$USERNAME@$HOST" \
+            "$remote_env bash -s" <<'REMOTE_SCRIPT'
+          set -euo pipefail
+
+          command -v node >/dev/null
+          command -v pm2 >/dev/null
+          command -v curl >/dev/null
+
+          case "$TARGET_DIRECTORY" in
+            /var/www/*|/home/*/*|/root/*|/opt/*) ;;
+            *)
+              echo "TARGET_DIRECTORY must be inside /var/www, /home, /root or /opt" >&2
+              exit 1
+              ;;
+          esac
+
+          case "$RELEASE_SHA" in
+            ''|*[!0-9a-f]*)
+              echo "Invalid release SHA" >&2
+              exit 1
+              ;;
+          esac
+
+          if [ "${#RELEASE_SHA}" -ne 40 ]; then
+            echo "Invalid release SHA length" >&2
+            exit 1
+          fi
+
+          release_root="$TARGET_DIRECTORY/releases"
+          release_dir="$release_root/$RELEASE_SHA"
+          archive="/tmp/prince-$RELEASE_SHA.tar.gz"
+
+          mkdir -p "$release_dir"
+          tar -xzf "$archive" -C "$release_dir"
+          rm -f "$archive"
+
+          cd "$release_dir"
+          # Restart instead of cluster reload to avoid briefly running two
+          # Node.js processes on a 512 MiB / 1 GiB server.
+          pm2 startOrRestart ecosystem.config.cjs --update-env
+
+          for attempt in 1 2 3 4 5; do
+            if curl --fail --silent --show-error http://127.0.0.1:3100/ >/dev/null; then
+              break
+            fi
+
+            if [ "$attempt" -eq 5 ]; then
+              pm2 logs prince-programme --lines 60 --nostream
+              exit 1
+            fi
+
+            sleep 2
+          done
+
+          ln -sfn "$release_dir" "$TARGET_DIRECTORY/current"
+          pm2 save
+
+          find "$release_root" \
+            -mindepth 1 \
+            -maxdepth 1 \
+            -type d \
+            -regextype posix-extended \
+            -regex '.*/[0-9a-f]{40}' \
+            -printf '%T@ %p\n' \
+            | sort -rn \
+            | tail -n +4 \
+            | cut -d' ' -f2- \
+            | while IFS= read -r old_release; do
+                case "$old_release" in
+                  "$release_root"/*) rm -rf -- "$old_release" ;;
+                esac
+              done
+          REMOTE_SCRIPT

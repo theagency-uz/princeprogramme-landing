@@ -3,7 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, CheckCircle, WarningCircle } from "@phosphor-icons/react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import PhoneInput from "react-phone-input-2";
+import ru from "react-phone-input-2/lang/ru.json";
 import { applicationSchema, type ApplicationFormValues } from "@/lib/application-schema";
 
 const interests = ["Студента", "Родителя", "Учителя", "Другие"];
@@ -12,6 +14,7 @@ export function ApplicationForm() {
 	const [serverState, setServerState] = useState<"idle" | "success" | "error">("idle");
 
 	const {
+		control,
 		register,
 		handleSubmit,
 		reset,
@@ -30,26 +33,25 @@ export function ApplicationForm() {
 	async function onSubmit(values: ApplicationFormValues) {
 		setServerState("idle");
 
-		const formEndpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT;
+		const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+		const formEndpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT || `${basePath}/api/telegram`;
 
-		if (!formEndpoint) {
+		try {
+			const response = await fetch(formEndpoint, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(values),
+			});
+
+			if (!response.ok) {
+				throw new Error("Application request failed");
+			}
+
+			setServerState("success");
+			reset();
+		} catch {
 			setServerState("error");
-			return;
 		}
-
-		const response = await fetch(formEndpoint, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(values),
-		});
-
-		if (!response.ok) {
-			setServerState("error");
-			return;
-		}
-
-		setServerState("success");
-		reset();
 	}
 
 	return (
@@ -72,18 +74,42 @@ export function ApplicationForm() {
 					<label htmlFor="phone" className="text-sm font-semibold text-[var(--ink)]">
 						Телефон
 					</label>
-					<input
-						id="phone"
-						{...register("phone")}
-						autoComplete="tel"
-						className="h-12 w-full min-w-0 max-w-full rounded-xl border-0 bg-[color-mix(in_srgb,var(--page)_76%,var(--paper)_24%)] px-4 text-[var(--ink)] shadow-[inset_0_-2px_0_color-mix(in_srgb,var(--gold)_18%,transparent)] outline-none transition focus:bg-[var(--paper)] focus:ring-4 focus:ring-[color-mix(in_srgb,var(--gold)_22%,transparent)]"
+					<Controller
+						name="phone"
+						control={control}
+						render={({ field }) => (
+							<PhoneInput
+								country="uz"
+								value={field.value}
+								onChange={(value) => field.onChange(value ? `+${value}` : "")}
+								onBlur={field.onBlur}
+								preferredCountries={["uz", "kz", "kg", "tj", "tm", "gb"]}
+								preserveOrder={["preferredCountries"]}
+								countryCodeEditable={false}
+								enableSearch
+								disableSearchIcon
+								localization={ru}
+								searchPlaceholder="Найти страну"
+								searchNotFound="Страна не найдена"
+								placeholder="Номер телефона"
+								containerClass={`prince-phone-input${errors.phone ? " prince-phone-input--error" : ""}`}
+								inputProps={{
+									id: "phone",
+									name: field.name,
+									ref: field.ref,
+									autoComplete: "tel",
+									"aria-invalid": Boolean(errors.phone),
+									"aria-describedby": "phone-error",
+								}}
+							/>
+						)}
 					/>
-					<FieldError message={errors.phone?.message} />
+					<FieldError id="phone-error" message={errors.phone?.message} />
 				</div>
 
 				<div className="grid min-w-0 gap-2">
 					<label htmlFor="email" className="text-sm font-semibold text-[var(--ink)]">
-						Имейл
+						Email <span className="font-normal text-[var(--muted)]">(необязательно)</span>
 					</label>
 					<input
 						id="email"
@@ -153,10 +179,18 @@ export function ApplicationForm() {
 	);
 }
 
-function FieldError({ message }: { message?: string }) {
+function FieldError({ message, id }: { message?: string; id?: string }) {
 	if (!message) {
-		return <span className="min-h-5 text-xs text-[var(--muted)]"> </span>;
+		return (
+			<span id={id} className="min-h-5 text-xs text-[var(--muted)]">
+				{" "}
+			</span>
+		);
 	}
 
-	return <span className="min-h-5 text-xs font-semibold text-red-700">{message}</span>;
+	return (
+		<span id={id} className="min-h-5 text-xs font-semibold text-red-700">
+			{message}
+		</span>
+	);
 }
