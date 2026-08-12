@@ -74,8 +74,7 @@ const studentTestimonials: StudentTestimonial[] = [
 	{
 		name: "Абдуллох",
 		achievement: "Диплом с отличием",
-		quote:
-			'"Hattoki maktabni bitirmasdan, Buyuk Britaniyaning oliy ta\'limiga birinchi qadam qo\'yishga yordam bergan Prince Programme\'ga rahmat!"',
+		quote: "\"Hattoki maktabni bitirmasdan, Buyuk Britaniyaning oliy ta'limiga birinchi qadam qo'yishga yordam bergan Prince Programme'ga rahmat!\"",
 		video: "/videos/IMG_3685.mp4",
 	},
 	{
@@ -390,7 +389,10 @@ function CountriesSection() {
 
 								<ul className="mt-9 grid max-w-lg grid-cols-2 gap-x-5 gap-y-3 text-sm font-bold text-[color-mix(in_srgb,var(--brand-ivory)_88%,transparent)] sm:text-base">
 									{countries.map((country) => (
-										<li key={country} className="border-l-2 border-[color-mix(in_srgb,var(--gold)_72%,transparent)] pl-3 leading-6">
+										<li
+											key={country}
+											className="border-l-2 border-[color-mix(in_srgb,var(--gold)_72%,transparent)] pl-3 leading-6"
+										>
 											{country}
 										</li>
 									))}
@@ -409,7 +411,7 @@ function CountriesSection() {
 
 						<figure className="relative min-h-[390px] overflow-hidden bg-[var(--brand-navy)] sm:min-h-[520px] lg:min-h-[620px]">
 							<Image
-								src={assetPath("/images/central-asia-map-v2.jpg")}
+								src={assetPath("/images/central-asia-map-v2.webp")}
 								alt="Карта Центральной Азии с представительствами Prince Programme в Казахстане, Узбекистане, Кыргызстане, Таджикистане и Туркменистане"
 								fill
 								sizes="(min-width: 1024px) 58vw, 100vw"
@@ -603,8 +605,7 @@ function WhySection() {
 }
 
 function StudentTestimonialsSection() {
-	const testimonialGridClass =
-		studentTestimonials.length >= 3 ? "lg:grid-cols-3 lg:max-w-5xl" : "md:grid-cols-2 md:max-w-3xl";
+	const testimonialGridClass = studentTestimonials.length >= 3 ? "lg:grid-cols-3 lg:max-w-5xl" : "md:grid-cols-2 md:max-w-3xl";
 
 	return (
 		<section id="testimonials" className="py-12 md:py-16">
