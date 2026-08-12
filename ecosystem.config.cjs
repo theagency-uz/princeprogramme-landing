@@ -17,7 +17,7 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         HOSTNAME: "127.0.0.1",
-        PORT: "3100",
+        PORT: "3000",
         TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,
         TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID,
         ALLOWED_ORIGIN: process.env.ALLOWED_ORIGIN

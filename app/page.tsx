@@ -370,34 +370,33 @@ function CountriesSection() {
 		<section id="countries" aria-label="Пять стран Центральной Азии" className="relative z-30 py-12 md:py-16">
 			<div className="page-shell">
 				<Reveal className="overflow-hidden rounded-[36px] bg-[var(--brand-navy)] text-[var(--brand-ivory)] shadow-[0_30px_90px_rgba(7,24,47,0.2)]">
-					<div className="grid lg:min-h-[620px] lg:grid-cols-[0.94fr_1.06fr]">
-						<div className="relative flex flex-col justify-center px-6 py-10 sm:px-10 sm:py-12 lg:px-12 xl:px-14">
+					<div className="grid lg:grid-cols-[0.86fr_1.14fr]">
+						<div className="relative flex min-h-[520px] flex-col justify-center px-6 py-10 sm:px-10 sm:py-12 lg:min-h-[620px] lg:px-12 xl:px-14">
 							<div
-								className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(201,166,70,0.1),transparent_34%)]"
+								className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_14%,rgba(215,185,87,0.12),transparent_36%)]"
 								aria-hidden="true"
 							/>
 
 							<div className="relative">
-								<h2 className="font-display max-w-[620px] text-[2.35rem] font-semibold leading-[1.04] tracking-normal sm:text-5xl lg:text-[3.4rem] xl:text-[3.75rem]">
+								<h2 className="font-display max-w-[570px] text-[2.35rem] font-semibold leading-[1.04] tracking-normal sm:text-5xl lg:text-[3.25rem] xl:text-[3.65rem]">
 									Prince Programme в Центральной Азии
 								</h2>
 
-								<div className="mt-7 h-px w-12 bg-[var(--gold)] sm:mt-8" aria-hidden="true" />
+								<div className="mt-7 h-0.5 w-14 bg-[var(--gold)] sm:mt-8" aria-hidden="true" />
 
-								<p className="mt-7 max-w-lg text-lg leading-8 text-[color-mix(in_srgb,var(--brand-ivory)_82%,transparent)] sm:text-xl">
+								<p className="mt-7 max-w-md text-base leading-7 text-[color-mix(in_srgb,var(--brand-ivory)_82%,transparent)] sm:text-lg sm:leading-8">
 									Открываем студентам путь к образованию в Великобритании.
 								</p>
 
-								<ul className="mt-8 flex max-w-xl flex-wrap items-center gap-x-3 gap-y-3 text-sm font-bold text-[color-mix(in_srgb,var(--brand-ivory)_88%,transparent)] sm:text-base">
-									{countries.map((country, index) => (
-										<li key={country} className="flex items-center gap-3">
-											{index > 0 ? <span className="size-1 rounded-full bg-[var(--gold)]" aria-hidden="true" /> : null}
+								<ul className="mt-9 grid max-w-lg grid-cols-2 gap-x-5 gap-y-3 text-sm font-bold text-[color-mix(in_srgb,var(--brand-ivory)_88%,transparent)] sm:text-base">
+									{countries.map((country) => (
+										<li key={country} className="border-l-2 border-[color-mix(in_srgb,var(--gold)_72%,transparent)] pl-3 leading-6">
 											{country}
 										</li>
 									))}
 								</ul>
 
-								<div className="mt-9 flex max-w-xl items-center gap-4 border-t border-[color-mix(in_srgb,var(--gold)_34%,transparent)] pt-6 sm:mt-10">
+								<div className="mt-10 flex max-w-lg items-center gap-4 border-t border-[color-mix(in_srgb,var(--gold)_34%,transparent)] pt-6">
 									<div className="grid size-11 shrink-0 place-items-center rounded-full border border-[var(--gold)] text-[var(--gold)]">
 										<Bank className="size-6" weight="duotone" />
 									</div>
@@ -408,21 +407,27 @@ function CountriesSection() {
 							</div>
 						</div>
 
-						<div className="relative min-h-[410px] overflow-hidden sm:min-h-[500px] lg:min-h-0">
-							<div className="absolute inset-y-0 right-0 w-[200%]">
-								<Image
-									src={assetPath("/images/central-asia-map-reference.jpg")}
-									alt="Карта Центральной Азии с представительствами Prince Programme в пяти странах"
-									fill
-									sizes="(min-width: 1024px) 52vw, 100vw"
-									className="object-cover object-right"
-								/>
-							</div>
+						<figure className="relative min-h-[390px] overflow-hidden bg-[var(--brand-navy)] sm:min-h-[520px] lg:min-h-[620px]">
+							<Image
+								src={assetPath("/images/central-asia-map-v2.jpg")}
+								alt="Карта Центральной Азии с представительствами Prince Programme в Казахстане, Узбекистане, Кыргызстане, Таджикистане и Туркменистане"
+								fill
+								sizes="(min-width: 1024px) 58vw, 100vw"
+								className="object-contain p-3 sm:p-5 lg:p-0"
+							/>
 							<div
-								className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,var(--brand-navy)_0%,rgba(7,24,47,0.48)_6%,transparent_16%)]"
+								className="pointer-events-none absolute inset-y-0 left-0 hidden w-[14%] bg-[linear-gradient(90deg,var(--brand-navy)_0%,rgba(7,24,47,0.72)_42%,transparent_100%)] lg:block"
 								aria-hidden="true"
 							/>
-						</div>
+							<div
+								className="pointer-events-none absolute inset-x-0 top-0 h-12 bg-[linear-gradient(180deg,var(--brand-navy)_0%,transparent_100%)] lg:hidden"
+								aria-hidden="true"
+							/>
+							<div
+								className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,transparent_36%,rgba(7,24,47,0.18)_100%)]"
+								aria-hidden="true"
+							/>
+						</figure>
 					</div>
 				</Reveal>
 			</div>
