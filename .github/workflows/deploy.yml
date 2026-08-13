@@ -160,7 +160,9 @@ jobs:
 
           for attempt in 1 2 3 4 5; do
             if curl --fail --silent --show-error http://127.0.0.1:3000/ >/dev/null \
-              && curl --fail --silent --show-error http://127.0.0.1:3000/images/prince-logo.webp >/dev/null; then
+              && curl --fail --silent --show-error http://127.0.0.1:3000/images/prince-logo.webp >/dev/null \
+              && curl --fail --silent --show-error http://127.0.0.1:3000/robots.txt >/dev/null \
+              && curl --fail --silent --show-error http://127.0.0.1:3000/sitemap.xml >/dev/null; then
               break
             fi
 

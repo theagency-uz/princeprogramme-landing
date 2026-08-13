@@ -17,6 +17,16 @@ const nextConfig: NextConfig = {
   },
   images: {
     unoptimized: true
+  },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.princeprogramme.com" }],
+        destination: "https://princeprogramme.com/:path*",
+        permanent: true
+      }
+    ];
   }
 };
 
