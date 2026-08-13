@@ -3,6 +3,8 @@ import { applicationSchema } from "@/lib/application-schema";
 
 export const runtime = "nodejs";
 
+const productionOrigins = ["https://princeprogramme.com", "https://www.princeprogramme.com"];
+
 function getRequestAccess(request: Request) {
   const requestOrigin = request.headers.get("origin");
   const serverOrigin = new URL(request.url).origin;
@@ -10,7 +12,7 @@ function getRequestAccess(request: Request) {
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean);
-  const allowedOrigins = new Set([serverOrigin, ...configuredOrigins]);
+  const allowedOrigins = new Set([serverOrigin, ...productionOrigins, ...configuredOrigins]);
   const isAllowed = !requestOrigin || allowedOrigins.has(requestOrigin);
   const responseOrigin = requestOrigin && isAllowed ? requestOrigin : serverOrigin;
 
