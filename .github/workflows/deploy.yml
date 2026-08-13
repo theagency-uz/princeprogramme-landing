@@ -17,6 +17,8 @@ jobs:
     name: Build and deploy
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    environment:
+      name: production
 
     steps:
       - name: Checkout repository
@@ -118,6 +120,8 @@ jobs:
           command -v node >/dev/null
           command -v pm2 >/dev/null
           command -v curl >/dev/null
+          test -n "$TELEGRAM_BOT_TOKEN"
+          test -n "$TELEGRAM_CHAT_ID"
 
           case "$TARGET_DIRECTORY" in
             /var/www/*|/home/*/*|/root/*|/opt/*) ;;
