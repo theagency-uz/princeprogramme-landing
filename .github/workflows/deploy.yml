@@ -148,12 +148,15 @@ jobs:
           rm -f "$archive"
 
           cd "$release_dir"
-          # Restart instead of cluster reload to avoid briefly running two
-          # Node.js processes on a 512 MiB / 1 GiB server.
-          pm2 startOrRestart ecosystem.config.cjs --update-env
+          # Recreate the PM2 process so its cwd always points to this release.
+          # Restarting the existing process can preserve the previous release
+          # directory, which is removed later by the cleanup step.
+          pm2 delete prince-programme >/dev/null 2>&1 || true
+          pm2 start ecosystem.config.cjs --update-env
 
           for attempt in 1 2 3 4 5; do
-            if curl --fail --silent --show-error http://127.0.0.1:3000/ >/dev/null; then
+            if curl --fail --silent --show-error http://127.0.0.1:3000/ >/dev/null \
+              && curl --fail --silent --show-error http://127.0.0.1:3000/images/prince-logo.webp >/dev/null; then
               break
             fi
 
