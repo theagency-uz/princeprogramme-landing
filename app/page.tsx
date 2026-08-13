@@ -414,8 +414,9 @@ function CountriesSection() {
 								src={assetPath("/images/central-asia-map-v2.webp")}
 								alt="Карта Центральной Азии с представительствами Prince Programme в Казахстане, Узбекистане, Кыргызстане, Таджикистане и Туркменистане"
 								fill
+								unoptimized
 								sizes="(min-width: 1024px) 58vw, 100vw"
-								className="object-contain p-3 sm:p-5 lg:p-0"
+								className="object-contain p-3 [filter:contrast(1.08)_saturate(1.04)] [image-rendering:-webkit-optimize-contrast] sm:p-5 lg:p-0"
 							/>
 							<div
 								className="pointer-events-none absolute inset-y-0 left-0 hidden w-[14%] bg-[linear-gradient(90deg,var(--brand-navy)_0%,rgba(7,24,47,0.72)_42%,transparent_100%)] lg:block"
@@ -423,10 +424,6 @@ function CountriesSection() {
 							/>
 							<div
 								className="pointer-events-none absolute inset-x-0 top-0 h-12 bg-[linear-gradient(180deg,var(--brand-navy)_0%,transparent_100%)] lg:hidden"
-								aria-hidden="true"
-							/>
-							<div
-								className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,transparent_36%,rgba(7,24,47,0.18)_100%)]"
 								aria-hidden="true"
 							/>
 						</figure>
