@@ -2,7 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, CheckCircle, WarningCircle } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useId, useRef, useState } from "react";
+import { trackPopupLead } from "@/lib/meta-pixel";
 import { Controller, useForm } from "react-hook-form";
 import PhoneInput from "react-phone-input-2";
 import ru from "react-phone-input-2/lang/ru.json";
@@ -10,7 +11,10 @@ import { applicationSchema, type ApplicationFormValues } from "@/lib/application
 
 const interests = ["Студента", "Родителя", "Учителя", "Другие"];
 
-export function ApplicationForm() {
+export function ApplicationForm({ trackLead = false }: { trackLead?: boolean }) {
+	const formId = useId();
+	const fieldId = (name: string) => `${formId}-${name}`;
+	const submittingRef = useRef(false);
 	const [serverState, setServerState] = useState<"idle" | "success" | "error">("idle");
 
 	const {
@@ -31,6 +35,8 @@ export function ApplicationForm() {
 	});
 
 	async function onSubmit(values: ApplicationFormValues) {
+		if (submittingRef.current) return;
+		submittingRef.current = true;
 		setServerState("idle");
 
 		const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -43,25 +49,29 @@ export function ApplicationForm() {
 				body: JSON.stringify(values),
 			});
 
-			if (!response.ok) {
+			const result = await response.json();
+			if (!response.ok || result?.ok !== true) {
 				throw new Error("Application request failed");
 			}
 
 			setServerState("success");
 			reset();
+			if (trackLead) trackPopupLead();
 		} catch {
 			setServerState("error");
+		} finally {
+			submittingRef.current = false;
 		}
 	}
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="grid min-w-0 gap-4" noValidate>
 			<div className="grid min-w-0 gap-2">
-				<label htmlFor="name" className="text-sm font-semibold text-[var(--ink)]">
+				<label htmlFor={fieldId("name")} className="text-sm font-semibold text-[var(--ink)]">
 					Ваше имя
 				</label>
 				<input
-					id="name"
+					id={fieldId("name")}
 					{...register("name")}
 					autoComplete="name"
 					className="h-12 w-full min-w-0 max-w-full rounded-xl border-0 bg-[color-mix(in_srgb,var(--page)_76%,var(--paper)_24%)] px-4 text-[var(--ink)] shadow-[inset_0_-2px_0_color-mix(in_srgb,var(--gold)_18%,transparent)] outline-none transition focus:bg-[var(--paper)] focus:ring-4 focus:ring-[color-mix(in_srgb,var(--gold)_22%,transparent)]"
@@ -71,7 +81,7 @@ export function ApplicationForm() {
 
 			<div className="grid min-w-0 gap-4 md:grid-cols-2">
 				<div className="grid min-w-0 gap-2">
-					<label htmlFor="phone" className="text-sm font-semibold text-[var(--ink)]">
+					<label htmlFor={fieldId("phone")} className="text-sm font-semibold text-[var(--ink)]">
 						Телефон
 					</label>
 					<Controller
@@ -94,25 +104,25 @@ export function ApplicationForm() {
 								placeholder="Номер телефона"
 								containerClass={`prince-phone-input${errors.phone ? " prince-phone-input--error" : ""}`}
 								inputProps={{
-									id: "phone",
+									id: fieldId("phone"),
 									name: field.name,
 									ref: field.ref,
 									autoComplete: "tel",
 									"aria-invalid": Boolean(errors.phone),
-									"aria-describedby": "phone-error",
+									"aria-describedby": fieldId("phone-error"),
 								}}
 							/>
 						)}
 					/>
-					<FieldError id="phone-error" message={errors.phone?.message} />
+					<FieldError id={fieldId("phone-error")} message={errors.phone?.message} />
 				</div>
 
 				<div className="grid min-w-0 gap-2">
-					<label htmlFor="email" className="text-sm font-semibold text-[var(--ink)]">
+					<label htmlFor={fieldId("email")} className="text-sm font-semibold text-[var(--ink)]">
 						Email <span className="font-normal text-[var(--muted)]">(необязательно)</span>
 					</label>
 					<input
-						id="email"
+						id={fieldId("email")}
 						{...register("email")}
 						autoComplete="email"
 						className="h-12 w-full min-w-0 max-w-full rounded-xl border-0 bg-[color-mix(in_srgb,var(--page)_76%,var(--paper)_24%)] px-4 text-[var(--ink)] shadow-[inset_0_-2px_0_color-mix(in_srgb,var(--gold)_18%,transparent)] outline-none transition focus:bg-[var(--paper)] focus:ring-4 focus:ring-[color-mix(in_srgb,var(--gold)_22%,transparent)]"
@@ -122,11 +132,11 @@ export function ApplicationForm() {
 			</div>
 
 			<div className="grid min-w-0 gap-2">
-				<label htmlFor="interest" className="text-sm font-semibold text-[var(--ink)]">
+				<label htmlFor={fieldId("interest")} className="text-sm font-semibold text-[var(--ink)]">
 					Консультация для:
 				</label>
 				<select
-					id="interest"
+					id={fieldId("interest")}
 					{...register("interest")}
 					className="h-12 w-full min-w-0 max-w-full rounded-xl border-0 bg-[color-mix(in_srgb,var(--page)_76%,var(--paper)_24%)] px-4 text-[var(--ink)] shadow-[inset_0_-2px_0_color-mix(in_srgb,var(--gold)_18%,transparent)] outline-none transition focus:bg-[var(--paper)] focus:ring-4 focus:ring-[color-mix(in_srgb,var(--gold)_22%,transparent)]"
 				>
@@ -141,11 +151,11 @@ export function ApplicationForm() {
 			</div>
 
 			<div className="grid min-w-0 gap-2">
-				<label htmlFor="comment" className="text-sm font-semibold text-[var(--ink)]">
+				<label htmlFor={fieldId("comment")} className="text-sm font-semibold text-[var(--ink)]">
 					Комментарии
 				</label>
 				<textarea
-					id="comment"
+					id={fieldId("comment")}
 					{...register("comment")}
 					rows={4}
 					className="w-full min-w-0 max-w-full resize-none rounded-xl border-0 bg-[color-mix(in_srgb,var(--page)_76%,var(--paper)_24%)] px-4 py-3 text-[var(--ink)] shadow-[inset_0_-2px_0_color-mix(in_srgb,var(--gold)_18%,transparent)] outline-none transition focus:bg-[var(--paper)] focus:ring-4 focus:ring-[color-mix(in_srgb,var(--gold)_22%,transparent)]"

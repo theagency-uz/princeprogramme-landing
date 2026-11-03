@@ -89,7 +89,9 @@ export async function POST(request: Request) {
     cache: "no-store"
   }).catch(() => null);
 
-  if (!telegramResponse?.ok) {
+  const telegramResult = await telegramResponse?.json().catch(() => null);
+
+  if (!telegramResponse?.ok || telegramResult?.ok !== true) {
     return NextResponse.json(
       { error: "Telegram request failed" },
       { status: 502, headers: corsHeaders }

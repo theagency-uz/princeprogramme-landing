@@ -3,6 +3,7 @@ import "@fontsource-variable/newsreader";
 import "react-phone-input-2/lib/style.css";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
+import { MetaPixelFallback, SiteScripts } from "@/components/SiteScripts";
 
 const siteUrl = "https://princeprogramme.com";
 const title = "Prince Programme | Foundation в Великобритании";
@@ -145,7 +146,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
+      <head>
+        <SiteScripts />
+      </head>
       <body>
+        <MetaPixelFallback />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}

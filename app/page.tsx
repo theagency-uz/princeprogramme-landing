@@ -15,6 +15,7 @@ import {
 	TelegramLogo,
 	UsersThree,
 } from "@phosphor-icons/react/dist/ssr";
+import { ApplicationDialog, ApplicationDialogTrigger } from "@/components/ApplicationDialog";
 import { ApplicationForm } from "@/components/ApplicationForm";
 import {
 	AcademicPulseAnimation,
@@ -135,7 +136,7 @@ export default function Home() {
 			<div className="paper-grain" aria-hidden="true" />
 			<PageScrollProgress />
 			<ScrollVoyage />
-			<Header />
+			<ApplicationDialog><Header /></ApplicationDialog>
 			<Hero />
 			<HeroStatsSection />
 			<ProgramSection />
@@ -180,14 +181,13 @@ function Header() {
 
 					<div className="flex items-center justify-end">
 						<MobileMenu items={navItems} />
-						<a
-							href="#contacts"
+						<ApplicationDialogTrigger
 							className="group relative hidden h-14 items-center justify-center gap-2 overflow-hidden rounded-[22px] bg-[var(--gold)] px-5 text-sm font-black text-[#07182f] shadow-[0_22px_70px_rgba(147,117,29,0.2)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--gold)_86%,white_14%)] active:translate-y-0 lg:inline-flex"
 						>
 							<span className="pointer-events-none absolute inset-y-[-30%] -left-12 w-8 -rotate-12 bg-white/42 blur-sm transition duration-500 group-hover:translate-x-48" />
 							<span className="relative whitespace-nowrap">Оставить заявку</span>
 							<ArrowRight className="relative size-4 transition group-hover:translate-x-1" weight="bold" />
-						</a>
+						</ApplicationDialogTrigger>
 					</div>
 				</nav>
 			</div>

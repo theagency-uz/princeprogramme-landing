@@ -1,5 +1,6 @@
 "use client";
 
+import { useApplicationDialog } from "@/components/ApplicationDialog";
 import { ArrowRight, List, X } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -11,6 +12,7 @@ type MobileMenuItem = {
 
 export function MobileMenu({ items }: { items: MobileMenuItem[] }) {
 	const [isOpen, setIsOpen] = useState(false);
+	const openApplicationDialog = useApplicationDialog();
 	const reduceMotion = useReducedMotion();
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const menuRef = useRef<HTMLElement>(null);
@@ -110,14 +112,15 @@ export function MobileMenu({ items }: { items: MobileMenuItem[] }) {
 								</a>
 							))}
 
-							<a
-								href="#contacts"
-								onClick={closeMenu}
-								className="mt-3 flex min-h-14 items-center justify-center gap-2 rounded-[20px] bg-[var(--gold)] px-5 text-sm font-black text-[#07182f] transition hover:bg-[color-mix(in_srgb,var(--gold)_86%,white_14%)] active:scale-[0.98]"
+							<button
+								type="button"
+								aria-haspopup="dialog"
+								onClick={() => { closeMenu(); openApplicationDialog(triggerRef.current); }}
+								className="mt-3 flex w-full min-h-14 items-center justify-center gap-2 rounded-[20px] bg-[var(--gold)] px-5 text-sm font-black text-[#07182f] transition hover:bg-[color-mix(in_srgb,var(--gold)_86%,white_14%)] active:scale-[0.98]"
 							>
 								Оставить заявку
 								<ArrowRight className="size-4" weight="bold" />
-							</a>
+							</button>
 						</motion.nav>
 					</motion.div>
 				) : null}
