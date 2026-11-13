@@ -9,6 +9,7 @@ import {
 	EnvelopeSimple,
 	GraduationCap,
 	HouseLine,
+	InstagramLogo,
 	Phone,
 	ShieldCheck,
 	TelegramLogo,
@@ -694,12 +695,6 @@ function ContactSection() {
 									value="@princeprogramme_ca"
 									href="https://t.me/princeprogramme_ca"
 								/>
-								<ContactLine
-									icon={YoutubeLogo}
-									label="YouTube"
-									value="@princeprogramme_ca"
-									href="https://www.youtube.com/@princeprogramme_ca"
-								/>
 							</div>
 						</div>
 
@@ -708,6 +703,24 @@ function ContactSection() {
 							<p className="mt-2 text-sm leading-6 text-[var(--muted)]">Мы с вами свяжемся</p>
 							<div className="mt-6">
 								<ApplicationForm />
+							</div>
+						</div>
+						<div className="min-w-0 pt-2 pb-1 lg:col-span-2">
+							<div className="mx-auto flex max-w-2xl items-center gap-4 sm:gap-8">
+								<span className="h-px flex-1 bg-[var(--line)]" aria-hidden="true" />
+								<p className="text-center text-sm font-semibold text-[var(--ink-soft)] sm:text-lg">Мы в социальных сетях</p>
+								<span className="h-px flex-1 bg-[var(--line)]" aria-hidden="true" />
+							</div>
+							<div className="mt-4 flex items-center justify-center gap-5 sm:gap-10">
+								<a href="https://www.instagram.com/princeprogramme/" target="_blank" rel="noreferrer" className="group inline-flex min-h-11 items-center gap-3 rounded-lg px-1 text-sm font-bold transition hover:text-[var(--gold)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--gold)] sm:text-lg">
+									<InstagramLogo className="size-8 shrink-0 text-[var(--gold)] transition group-hover:scale-110" weight="regular" aria-hidden="true" />
+									Instagram
+								</a>
+								<span className="h-8 w-px bg-[var(--line)]" aria-hidden="true" />
+								<a href="https://www.youtube.com/@princeprogramme_ca" target="_blank" rel="noreferrer" className="group inline-flex min-h-11 items-center gap-3 rounded-lg px-1 text-sm font-bold transition hover:text-[var(--gold)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--gold)] sm:text-lg">
+									<YoutubeLogo className="size-9 shrink-0 text-[var(--gold)] transition group-hover:scale-110" weight="fill" aria-hidden="true" />
+									YouTube
+								</a>
 							</div>
 						</div>
 					</div>

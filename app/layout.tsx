@@ -100,6 +100,7 @@ const structuredData = {
       sameAs: [
         "https://t.me/princeprogramme_ca",
         "https://wa.me/998971248881",
+        "https://www.instagram.com/princeprogramme/",
         "https://www.youtube.com/@princeprogramme_ca"
       ],
       areaServed: [
