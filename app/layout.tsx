@@ -97,7 +97,11 @@ const structuredData = {
         email: "info@prince-acdv.com",
         availableLanguage: ["Russian", "Uzbek", "English"]
       },
-      sameAs: ["https://t.me/princeprogramme_ca", "https://www.instagram.com/princeprogramme/"],
+      sameAs: [
+        "https://t.me/princeprogramme_ca",
+        "https://wa.me/998971248881",
+        "https://www.youtube.com/@princeprogramme_ca"
+      ],
       areaServed: [
         { "@type": "Country", name: "Узбекистан" },
         { "@type": "Country", name: "Казахстан" },

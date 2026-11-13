@@ -9,11 +9,12 @@ import {
 	EnvelopeSimple,
 	GraduationCap,
 	HouseLine,
-	InstagramLogo,
 	Phone,
 	ShieldCheck,
 	TelegramLogo,
 	UsersThree,
+	WhatsappLogo,
+	YoutubeLogo,
 } from "@phosphor-icons/react/dist/ssr";
 import { ApplicationDialog, ApplicationDialogTrigger } from "@/components/ApplicationDialog";
 import { ApplicationForm } from "@/components/ApplicationForm";
@@ -686,12 +687,18 @@ function ContactSection() {
 								<ContactLine icon={HouseLine} label="Офис" value="г. Ташкент, Мирзо-Улугбекский р., Катта Дархон, 25" />
 								<ContactLine icon={Phone} label="Телефон" value="+998 97 124 8881" />
 								<ContactLine icon={EnvelopeSimple} label="Почта" value="info@prince-acdv.com" />
-								<ContactLine icon={InstagramLogo} label="Инстаграм" value="@princeprogramme" />
+								<ContactLine icon={WhatsappLogo} label="WhatsApp" value="+998 97 124 8881" href="https://wa.me/998971248881" />
 								<ContactLine
 									icon={TelegramLogo}
 									label="Telegram"
 									value="@princeprogramme_ca"
 									href="https://t.me/princeprogramme_ca"
+								/>
+								<ContactLine
+									icon={YoutubeLogo}
+									label="YouTube"
+									value="@princeprogramme_ca"
+									href="https://www.youtube.com/@princeprogramme_ca"
 								/>
 							</div>
 						</div>
