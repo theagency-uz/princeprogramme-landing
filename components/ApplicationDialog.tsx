@@ -36,7 +36,7 @@ export function ApplicationDialog({ children }: { children: ReactNode }) {
             </DialogTitle>
             <DialogDescription>Мы с вами свяжемся</DialogDescription>
           </DialogHeader>
-          <ApplicationForm trackLead />
+          <ApplicationForm />
         </DialogContent>
       </Dialog>
     </ApplicationDialogContext.Provider>

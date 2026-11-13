@@ -88,13 +88,13 @@ const structuredData = {
         height: 450
       },
       image: `${siteUrl}/images/hero-campus.png`,
-      email: "info@princeconsult.com",
+      email: "info@prince-acdv.com",
       telephone: "+998971248881",
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "admissions",
         telephone: "+998971248881",
-        email: "info@princeconsult.com",
+        email: "info@prince-acdv.com",
         availableLanguage: ["Russian", "Uzbek", "English"]
       },
       sameAs: ["https://t.me/princeprogramme_ca", "https://www.instagram.com/princeprogramme/"],

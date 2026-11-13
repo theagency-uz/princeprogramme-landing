@@ -6,8 +6,8 @@ declare global {
   }
 }
 
-// Called by the popup's submit handler, never by a render or success effect.
-export function trackPopupLead() {
+// Called by each application's submit handler, never by a render or success effect.
+export function trackApplicationLead() {
   try {
     window.fbq?.("track", "Lead");
   } catch {

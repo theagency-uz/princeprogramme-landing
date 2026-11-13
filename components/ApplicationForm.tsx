@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, CheckCircle, WarningCircle } from "@phosphor-icons/react";
 import { useId, useRef, useState } from "react";
-import { trackPopupLead } from "@/lib/meta-pixel";
+import { trackApplicationLead } from "@/lib/meta-pixel";
 import { Controller, useForm } from "react-hook-form";
 import PhoneInput from "react-phone-input-2";
 import ru from "react-phone-input-2/lang/ru.json";
@@ -11,7 +11,7 @@ import { applicationSchema, type ApplicationFormValues } from "@/lib/application
 
 const interests = ["Студента", "Родителя", "Учителя", "Другие"];
 
-export function ApplicationForm({ trackLead = false }: { trackLead?: boolean }) {
+export function ApplicationForm() {
 	const formId = useId();
 	const fieldId = (name: string) => `${formId}-${name}`;
 	const submittingRef = useRef(false);
@@ -56,7 +56,7 @@ export function ApplicationForm({ trackLead = false }: { trackLead?: boolean }) 
 
 			setServerState("success");
 			reset();
-			if (trackLead) trackPopupLead();
+			trackApplicationLead();
 		} catch {
 			setServerState("error");
 		} finally {
@@ -182,7 +182,7 @@ export function ApplicationForm({ trackLead = false }: { trackLead?: boolean }) 
 			{serverState === "error" ? (
 				<p className="flex items-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-800 shadow-[0_12px_32px_rgba(127,29,29,0.08)]">
 					<WarningCircle className="size-5" weight="fill" />
-					Не удалось отправить заявку. Попробуйте еще раз или напишите на info@princeconsult.com.
+					Не удалось отправить заявку. Попробуйте еще раз или напишите на info@prince-acdv.com.
 				</p>
 			) : null}
 		</form>

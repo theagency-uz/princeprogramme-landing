@@ -20,7 +20,7 @@ function loadSource(path, mocks = {}, globals = {}) {
   return exports;
 }
 
-function formHarness({ trackLead = true, fetch, fbq }) {
+function formHarness({ fetch, fbq }) {
   const states = [];
   const pixel = loadSource("lib/meta-pixel.ts", {}, { window: { fbq } });
   const { ApplicationForm } = loadSource("components/ApplicationForm.tsx", {
@@ -44,13 +44,13 @@ function formHarness({ trackLead = true, fetch, fbq }) {
     "react-phone-input-2/lang/ru.json": {},
     "@phosphor-icons/react": {},
   }, { fetch });
-  const form = ApplicationForm({ trackLead });
+  const form = ApplicationForm();
   return { submit: () => form.props.onSubmit({ name: "Test", phone: "+998901234567", interest: "Студента" }), states };
 }
 
 const response = (ok, body) => ({ ok, json: async () => body });
 
-test("popup sends one Lead only after confirmed success; concurrent clicks are ignored", async () => {
+test("forms send one Lead only after confirmed success; concurrent clicks are ignored", async () => {
   let resolveRequest;
   let requests = 0;
   const events = [];
@@ -68,12 +68,12 @@ test("popup sends one Lead only after confirmed success; concurrent clicks are i
   assert.equal(form.states.at(-1), "success");
 });
 
-test("footer form sends no Lead", async () => {
+test("footer form sends a Lead after confirmed success", async () => {
   const events = [];
-  const form = formHarness({ trackLead: false, fetch: async () => response(true, { ok: true }), fbq: (...args) => events.push(args) });
+  const form = formHarness({ fetch: async () => response(true, { ok: true }), fbq: (...args) => events.push(args) });
   await form.submit();
   assert.equal(form.states.at(-1), "success");
-  assert.equal(events.length, 0);
+  assert.deepEqual(events, [["track", "Lead"]]);
 });
 
 test("failed, unconfirmed and malformed responses send no Lead and allow retry", async () => {

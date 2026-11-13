@@ -136,8 +136,10 @@ export default function Home() {
 			<div className="paper-grain" aria-hidden="true" />
 			<PageScrollProgress />
 			<ScrollVoyage />
-			<ApplicationDialog><Header /></ApplicationDialog>
-			<Hero />
+			<ApplicationDialog>
+				<Header />
+				<Hero />
+			</ApplicationDialog>
 			<HeroStatsSection />
 			<ProgramSection />
 			<CountriesSection />
@@ -204,21 +206,19 @@ function Hero() {
 					<p className="font-display pb-1 text-2xl italic leading-[1.15] text-[var(--gold-deep)] md:text-3xl">Follow Your Star</p>
 					<HeroHeadlineWords
 						text="Foundation в Великобритании"
-						className="mobile-hero-heading font-display mt-5 max-w-[11ch] text-5xl font-semibold leading-[0.95] tracking-normal text-[var(--ink)] md:text-7xl lg:text-8xl"
+						className="mobile-hero-heading font-display mt-5 max-w-[11ch] text-5xl font-semibold leading-[0.95] tracking-normal text-[var(--ink)] md:text-7xl lg:text-[clamp(2.5rem,4.2vw,3.75rem)]"
 					/>
 					<p className="mt-6 max-w-xl text-xl leading-8 text-[var(--muted)]">
 						Подготовьтесь к поступлению в престижные университеты Великобритании и других стран всего за 18 недель по стандартам
 						A-level — ещё до окончания школы
 					</p>
 					<div className="mt-8 flex flex-col gap-3 sm:flex-row">
-						<a
-							href="#contacts"
+						<ApplicationDialogTrigger
 							className="group inline-flex h-[3.25rem] items-center justify-center gap-2 rounded-full bg-[var(--brand-navy)] px-8 text-base font-black text-[var(--gold)] shadow-[0_16px_42px_rgba(7,24,47,0.18)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--brand-navy)_88%,var(--gold)_12%)] active:translate-y-0"
-							style={{ color: "var(--gold)" }}
 						>
 							Получить консультацию
 							<ArrowRight className="size-4 transition group-hover:translate-x-1" weight="bold" />
-						</a>
+						</ApplicationDialogTrigger>
 						<a
 							href="#program"
 							className="inline-flex h-[3.25rem] items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--paper)_78%,transparent)] px-8 text-base font-black text-[var(--ink)] shadow-[0_14px_38px_rgba(7,24,47,0.08)] transition hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--gold)_14%,var(--paper)_86%)] active:translate-y-0"
@@ -685,7 +685,7 @@ function ContactSection() {
 							<div className="relative z-10 grid min-w-0 gap-3">
 								<ContactLine icon={HouseLine} label="Офис" value="г. Ташкент, Мирзо-Улугбекский р., Катта Дархон, 25" />
 								<ContactLine icon={Phone} label="Телефон" value="+998 97 124 8881" />
-								<ContactLine icon={EnvelopeSimple} label="Почта" value="info@princeconsult.com" />
+								<ContactLine icon={EnvelopeSimple} label="Почта" value="info@prince-acdv.com" />
 								<ContactLine icon={InstagramLogo} label="Инстаграм" value="@princeprogramme" />
 								<ContactLine
 									icon={TelegramLogo}
@@ -723,10 +723,10 @@ function ContactSection() {
 					<div className="text-sm font-semibold text-[#6f776f] md:text-right">
 						<p>© 2025 Prince Programme. Все права защищены.</p>
 						<a
-							href="mailto:info@princeconsult.com"
+							href="mailto:info@prince-acdv.com"
 							className="mt-2 inline-block font-black text-[#07182f] transition hover:text-[var(--gold-deep)]"
 						>
-							info@princeconsult.com
+							info@prince-acdv.com
 						</a>
 					</div>
 				</div>
