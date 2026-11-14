@@ -205,7 +205,7 @@ function Hero() {
 			<div className="relative z-10 max-w-2xl">
 				<FloatIn>
 					<LineDrawing className="pointer-events-none absolute -bottom-14 left-0 hidden w-[560px] text-[var(--gold)] opacity-30 md:block" />
-					<p className="font-display pb-1 text-2xl italic leading-[1.15] text-[var(--gold-deep)] md:text-3xl">Follow Your Star</p>
+					<p className="font-display pb-1 text-2xl italic leading-[1.15] text-[var(--gold-deep)] md:text-3xl">Follow Your Star!</p>
 					<HeroHeadlineWords
 						text="Foundation в Великобритании"
 						className="mobile-hero-heading font-display mt-5 max-w-[11ch] text-5xl font-semibold leading-[0.95] tracking-normal text-[var(--ink)] md:text-7xl lg:text-[clamp(2.5rem,4.2vw,3.75rem)]"
